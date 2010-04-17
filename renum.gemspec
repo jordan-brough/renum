@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/duelinmarkers/renum}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{renum}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{provides a readable but terse enum facility for Ruby}
   s.test_files = [

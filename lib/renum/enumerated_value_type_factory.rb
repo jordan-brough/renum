@@ -7,19 +7,19 @@ module Renum
         klass = create_class nest, type_name
         create_values klass, values, &block
       end
-    
+
       def create_class nest, type_name
         klass = Class.new EnumeratedValue
         nest.const_set(type_name, klass)
         klass
       end
-    
+
       def create_values klass, values, &block
         setup_for_definition_in_block(klass) if values == :defined_in_block
         klass.class_eval &block if block_given?
         if values == :defined_in_block
           klass.block_defined_values.each do |value_name, init_args, instance_block|
-            value = klass.new(value_name)
+            value = klass.new(value_name, *init_args)
             klass.const_set(value_name, value)
             value.instance_eval &instance_block if instance_block
             value.init *init_args if value.respond_to? :init
@@ -30,8 +30,20 @@ module Renum
             klass.const_set(name, klass.new(name))
           end
         end
+        klass.module_eval do
+          # define query methods
+          klass.values.each do |enum|
+            define_method "#{enum.name}?" do
+              name == enum.name
+            end
+          end
+          # prettier inspect method
+          define_method "inspect" do
+            "#{klass}::#{name.titlecase}"
+          end
+        end
       end
-    
+
       def setup_for_definition_in_block klass
         klass.class_eval do
           def self.block_defined_values
@@ -43,7 +55,7 @@ module Renum
           end
         end
       end
-    
+
       def teardown_from_definition_in_block klass
         class << klass
           remove_method :block_defined_values

@@ -18,7 +18,11 @@ module Renum
       def values
         @values ||= []
       end
-      
+
+      def find(name)
+        detect{|v| v.name == name}
+      end
+
     end
     
     include Comparable
@@ -26,7 +30,7 @@ module Renum
     attr_reader :index
     
     def initialize name
-      @name = name.to_s
+      @name = name.to_s.downcase
       @index = self.class.values.size
       self.class.values << self
     end
@@ -35,7 +39,7 @@ module Renum
     # Don't override this if you're using Renum with the constantize_attribute 
     # plugin, which relies on this behavior.
     def to_s
-      "#{self.class}::#{name}"
+      name
     end
     
     # Sorts enumerated values into the order in which they're declared.

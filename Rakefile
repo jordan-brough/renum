@@ -15,6 +15,7 @@ begin
     s.homepage = "http://github.com/duelinmarkers/renum"
     s.description = "provides a readable but terse enum facility for Ruby"
     s.authors = ["John Hume"]
+    s.rubyforge_project = "renum"
   end
 rescue LoadError
   puts "Jeweler or a dependency not available. To install: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

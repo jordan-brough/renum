@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
      "spec/renum_spec.rb",
      "spec/spec_helper.rb"
   ]
-  s.has_rdoc = true
   s.homepage = %q{http://github.com/duelinmarkers/renum}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
